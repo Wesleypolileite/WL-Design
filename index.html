@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WL Design — Estúdio de desenvolvimento web premium. Criamos autoridades digitais com design de alto impacto, performance extrema e foco em conversão." />
+  <meta name="keywords" content="desenvolvimento web, design premium, sites profissionais, landing page, portfólio, SEO" />
+  <meta property="og:title" content="WL Design — Autoridades Digitais" />
+  <meta property="og:description" content="Não construímos apenas sites. Criamos autoridades digitais." />
+  <meta property="og:type" content="website" />
+  <title>WL Design — Autoridades Digitais</title>
+
+  <!-- Google Fonts: Inter + Syne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Syne', 'sans-serif'],
+          },
+          colors: {
+            obsidian: {
+              950: '#080B0F',
+              900: '#0D1117',
+              800: '#13181F',
+              700: '#1C2330',
+              600: '#252D3A',
+            },
+            electric: {
+              400: '#60A5FA',
+              500: '#3B82F6',
+              600: '#2563EB',
+            },
+            violet: {
+              400: '#A78BFA',
+              500: '#8B5CF6',
+              600: '#7C3AED',
+            },
+            neon: '#6366F1',
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% center' },
+              '100%': { backgroundPosition: '200% center' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)' },
+              '100%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.7)' },
+            },
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { font-family: 'Inter', sans-serif; }
+
+    body {
+      background-color: #080B0F;
+      color: #E2E8F0;
+      overflow-x: hidden;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0D1117; }
+    ::-webkit-scrollbar-thumb { background: #6366F1; border-radius: 2px; }
+
+    /* ── Selection ── */
+    ::selection { background: rgba(99,102,241,0.3); color: #fff; }
+
+    /* ── Noise texture overlay ── */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* ── Gradient orbs ── */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── Shimmer text ── */
+    .shimmer-text {
+      background: linear-gradient(
+        90deg,
+        #c7d2fe 0%,
+        #a5b4fc 20%,
+        #818cf8 40%,
+        #ffffff 50%,
+        #818cf8 60%,
+        #a5b4fc 80%,
+        #c7d2fe 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+
+    /* ── Gradient border ── */
+    .gradient-border {
+      position: relative;
+      border-radius: 16px;
+      background: #0D1117;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.5), rgba(139,92,246,0.2), rgba(99,102,241,0.1));
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+    .gradient-border:hover::before {
+      background: linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.6), rgba(99,102,241,0.4));
+    }
+
+    /* ── Glassmorphism ── */
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* ── Nav ── */
+    .nav-blur {
+      background: rgba(8, 11, 15, 0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── CTA Button ── */
+    .btn-primary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 0 0 rgba(99,102,241,0.5);
+      animation: pulse-cta 2.5s ease-in-out infinite;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #818cf8, #a78bfa);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99,102,241,0.5);
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    @keyframes pulse-cta {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+      50%       { box-shadow: 0 0 0 12px rgba(99,102,241,0); }
+    }
+
+    /* ── Secondary Button ── */
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      color: #c7d2fe;
+      background: transparent;
+      border: 1px solid rgba(99,102,241,0.4);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(99,102,241,0.9);
+      background: rgba(99,102,241,0.1);
+      color: #fff;
+    }
+
+    /* ── Project Cards ── */
+    .project-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #0D1117;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
+                  border-color 0.3s ease,
+                  box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99,102,241,0.5);
+      box-shadow: 0 20px 60px rgba(99,102,241,0.15), 0 0 0 1px rgba(99,102,241,0.2);
+    }
+    .project-card .card-shine {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99,102,241,0.08), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .project-card:hover .card-shine { opacity: 1; }
+
+    /* ── Feature Cards ── */
+    .feature-card {
+      background: #0D1117;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .feature-card:hover {
+      border-color: rgba(99,102,241,0.4);
+      transform: translateY(-4px);
+      background: #0F1419;
+      box-shadow: 0 12px 40px rgba(99,102,241,0.1);
+    }
+
+    /* ── Icon wrapper ── */
+    .icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.2);
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover .icon-wrap {
+      background: rgba(99,102,241,0.2);
+      box-shadow: 0 0 20px rgba(99,102,241,0.3);
+    }
+
+    /* ── Floating WhatsApp ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 9999;
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      animation: float 4s ease-in-out infinite;
+    }
+    .whatsapp-float:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 16px 48px rgba(37,211,102,0.5);
+      animation: none;
+    }
+    .whatsapp-float .tooltip {
+      position: absolute;
+      right: 74px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #13181F;
+      border: 1px solid rgba(37,211,102,0.3);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 10px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .whatsapp-float .tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: rgba(37,211,102,0.3);
+    }
+    .whatsapp-float:hover .tooltip { opacity: 1; }
+
+    /* ── Geometric shapes ── */
+    .geo-cube {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 20s linear infinite;
+    }
+    @keyframes rotateCube {
+      0%   { transform: rotateX(15deg) rotateY(0deg); }
+      100% { transform: rotateX(15deg) rotateY(360deg); }
+    }
+
+    /* ── Counter animation ── */
+    .counter { font-variant-numeric: tabular-nums; }
+
+    /* ── Hero grid lines ── */
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    }
+
+    /* ── Ticker / Tag ── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      background: rgba(99,102,241,0.12);
+      color: #a5b4fc;
+      border: 1px solid rgba(99,102,241,0.25);
+    }
+
+    /* ── Stat divider ── */
+    .stat-bar {
+      background: linear-gradient(90deg, #6366F1, #8B5CF6);
+      height: 2px;
+      width: 40px;
+      border-radius: 2px;
+    }
+
+    /* ── Mobile menu ── */
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .mobile-menu.open {
+      max-height: 400px;
+    }
+
+    /* ── Project image placeholder ── */
+    .project-img-bg {
+      width: 100%;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Hero photo ── */
+    .hero-photo-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      /* Trava a altura máxima ao viewport menos nav + padding */
+      max-height: calc(100vh - 160px);
+      flex-shrink: 0;
+    }
+    .hero-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      /* Altura máxima: viewport menos nav + padding do hero */
+      max-height: calc(100vh - 160px);
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 24px;
+      display: block;
+      box-shadow:
+        0 0  0   1px rgba(99,102,241,0.25),
+        0 8px  32px rgba(99,102,241,0.20),
+        0 32px 80px rgba(99,102,241,0.15),
+        0 0   80px rgba(139,92,246,0.08);
+      transition: box-shadow 0.4s ease, transform 0.4s ease;
+    }
+    .hero-photo:hover {
+      transform: scale(1.015);
+      box-shadow:
+        0 0  0   1px rgba(99,102,241,0.50),
+        0 12px 48px rgba(99,102,241,0.30),
+        0 40px 100px rgba(99,102,241,0.20),
+        0 0  100px rgba(139,92,246,0.15);
+    }
+    @media (max-width: 1023px) {
+      .hero-photo-wrapper {
+        max-width: 340px;
+        max-height: 420px;
+        margin: 0 auto;
+      }
+      .hero-photo { border-radius: 20px; max-height: 420px; }
+    }
+    @media (max-width: 640px) {
+      .hero-photo-wrapper { max-width: 280px; max-height: 360px; }
+      .hero-photo { border-radius: 16px; max-height: 360px; }
+    }
+
+    /* ── Smooth underline nav links ── */
+    .nav-link {
+      position: relative;
+      color: #94A3B8;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, #6366F1, #8B5CF6);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ── Section label ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #818cf8;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      margin-bottom: 24px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .geo-visual { display: none; }
+      .whatsapp-float { bottom: 20px; right: 20px; width: 54px; height: 54px; border-radius: 16px; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Noise texture -->
+  <div class="noise-overlay"></div>
+
+  <!-- ════════════════════════════════════════
+       NAVIGATION
+  ════════════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-4">
+
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2 group" aria-label="WL Design">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <span class="text-white font-bold font-display text-sm">WL</span>
+          </div>
+          <span class="font-display font-700 text-white text-lg tracking-tight">Design<span class="text-indigo-400">.</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#sobre" class="nav-link">Sobre</a>
+          <a href="#projetos" class="nav-link">Projetos</a>
+          <a href="#diferenciais" class="nav-link">Diferenciais</a>
+          <a href="#contato" class="nav-link">Contato</a>
+        </div>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:flex items-center gap-4">
+          <a
+            href="https://wa.me/5517981110842?text=Olá!%20Gostaria%20de%20elevar%20minha%20presença%20digital%20e%20fazer%20um%20orçamento"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary text-sm py-2.5 px-5"
+            style="animation: pulse-cta 2.5s ease-in-out infinite;"
+          >
+            <span>Iniciar meu Projeto</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Mobile menu toggle -->
+        <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu md:hidden nav-blur border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
+        <a href="#sobre" class="nav-link py-2">Sobre</a>
+        <a href="#projetos" class="nav-link py-2">Projetos</a>
+        <a href="#diferenciais" class="nav-link py-2">Diferenciais</a>
+        <a href="#contato" class="nav-link py-2">Contato</a>
+        <a
+          href="https://wa.me/5517981110842?text=Olá!%20Gostaria%20de%20elevar%20minha%20presença%20digital%20e%20fazer%20um%20orçamento"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary mt-2 justify-center"
+        >
+          <span>Iniciar meu Projeto</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════ -->
+  <section id="hero" class="relative min-h-screen flex items-start overflow-hidden">
+
+    <!-- Background orbs -->
+    <div class="orb w-[600px] h-[600px] bg-indigo-600/15 top-[-200px] left-[-200px]"></div>
+    <div class="orb w-[500px] h-[500px] bg-violet-600/10 top-[100px] right-[-150px]"></div>
+    <div class="orb w-[400px] h-[400px] bg-indigo-500/8 bottom-[-100px] left-[30%]"></div>
+
+    <!-- Grid lines -->
+    <div class="grid-lines"></div>
+
+    <!-- pt-24 = 96px garante folga abaixo da nav fixa (≈72px) em todos os breakpoints -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-24 md:pt-28 lg:pt-32 pb-16 w-full flex items-center">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 lg:items-start items-center w-full">
+
+        <!-- ── LEFT COLUMN: Text ── -->
+        <div>
+          <!-- Pre-label -->
+          <div class="reveal section-label">
+            <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></div>
+            Estúdio de Desenvolvimento Web
+          </div>
+
+          <!-- H1 -->
+          <h1 class="reveal reveal-delay-1 font-display text-5xl md:text-6xl lg:text-7xl font-800 leading-[0.95] tracking-tight text-white mb-8">
+            Seu próximo cliente<br />
+            pode estar a um clique<br />
+            <span class="shimmer-text">de distância.</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="reveal reveal-delay-2 text-slate-400 text-lg md:text-xl font-400 leading-relaxed mb-10">
+            Entregamos experiências web sob medida — com design que prende a atenção, 
+            performance que impressiona e estratégia focada em transformar visitantes em clientes reais.
+          </p>
+
+          <!-- CTA buttons -->
+          <div class="reveal reveal-delay-3 flex flex-wrap gap-4 items-center">
+            <a
+              href="https://wa.me/5517981110842?text=Olá!%20Gostaria%20de%20elevar%20minha%20presença%20digital%20e%20fazer%20um%20orçamento"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary text-base py-4 px-8"
+            >
+              <span>Iniciar meu Projeto</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#projetos" class="btn-secondary">
+              Ver Portfólio
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+          </div>
+
+          <!-- Social proof -->
+          <div class="reveal reveal-delay-4 flex flex-wrap gap-5 mt-10 pt-8 border-t border-white/5">
+            <div class="flex flex-col gap-1">
+              <span class="font-display text-3xl font-700 text-white counter" data-target="100">0</span>
+              <span class="text-slate-500 text-sm">% de clientes satisfeitos</span>
+            </div>
+            <div class="w-px bg-white/5 self-stretch hidden sm:block"></div>
+            <div class="flex flex-col gap-1">
+              <span class="font-display text-3xl font-700 text-white"><span class="counter" data-target="3">0</span>x</span>
+              <span class="text-slate-500 text-sm">Mais conversão em média</span>
+            </div>
+            <div class="w-px bg-white/5 self-stretch hidden sm:block"></div>
+            <div class="flex flex-col gap-1">
+              <span class="font-display text-3xl font-700 text-white"><span class="counter" data-target="5">0</span> anos</span>
+              <span class="text-slate-500 text-sm">De experiência no mercado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── RIGHT COLUMN: Photo ── -->
+        <div class="reveal reveal-delay-2 flex items-center justify-center lg:justify-end">
+          <div class="hero-photo-wrapper">
+
+            <!-- Outer glow ring -->
+            <div class="absolute inset-[-2px] rounded-3xl" style="background:linear-gradient(135deg,rgba(99,102,241,0.6),rgba(139,92,246,0.3),transparent 60%);filter:blur(1px);z-index:0;"></div>
+
+            <!-- Deep glow halo behind image -->
+            <div class="absolute inset-[-30px] rounded-[50px]" style="background:radial-gradient(ellipse at center, rgba(99,102,241,0.25) 0%, rgba(139,92,246,0.12) 40%, transparent 70%);filter:blur(30px);z-index:0;pointer-events:none;"></div>
+
+            <!-- Decorative orbit ring -->
+            <div class="absolute inset-[-20px] rounded-[44px] border border-indigo-500/10 animate-spin" style="animation-duration:25s;z-index:0;"></div>
+
+            <!-- Photo -->
+            <img
+              src="assets/wesley.jpg"
+              alt="Wesley Poli — Fundador da WL Design"
+              class="hero-photo"
+              loading="eager"
+              fetchpriority="high"
+            />
+
+            <!-- Floating badge — disponível -->
+            <div class="absolute top-5 left-[-16px] flex items-center gap-2 glass rounded-2xl px-3 py-2 shadow-xl z-20" style="border:1px solid rgba(99,102,241,0.25);animation:float 5s ease-in-out infinite;">
+              <div class="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/60 animate-pulse"></div>
+              <span class="text-white text-xs font-500 whitespace-nowrap">Disponível para projetos</span>
+            </div>
+
+            <!-- Floating badge — WL Design -->
+            <div class="absolute bottom-7 right-[-16px] flex items-center gap-2 glass rounded-2xl px-3 py-2 shadow-xl z-20" style="border:1px solid rgba(139,92,246,0.25);animation:float 7s ease-in-out infinite 1.2s;">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-md shadow-indigo-500/40 flex-shrink-0">
+                <span class="text-white font-bold text-xs">WL</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-white text-xs font-600 leading-tight">WL Design</span>
+                <span class="text-slate-400 text-[10px] leading-tight">Sites · Marcas · Resultados</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600 text-xs">
+      <span class="text-xs tracking-widest uppercase">Scroll</span>
+      <div class="w-px h-12 bg-gradient-to-b from-slate-600 to-transparent animate-pulse"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       AUTORIDADE / PROPÓSITO
+  ════════════════════════════════════════ -->
+  <section id="sobre" class="relative py-16 md:py-24 overflow-hidden">
+
+    <!-- Background orb -->
+    <div class="orb w-[500px] h-[500px] bg-violet-600/8 top-0 right-[-200px]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+        <!-- Text side -->
+        <div>
+          <div class="reveal section-label">
+            <div class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></div>
+            O Nosso Propósito
+          </div>
+
+          <h2 class="reveal reveal-delay-1 font-display text-4xl md:text-5xl font-700 text-white leading-tight mb-6">
+            Seu site é o vendedor mais importante da sua empresa.
+            <span class="text-slate-500">E ele trabalha 24h por dia.</span>
+          </h2>
+
+          <p class="reveal reveal-delay-2 text-slate-400 text-lg leading-relaxed mb-6">
+            A maioria das empresas perde clientes todos os dias por conta de sites lentos, 
+            desatualizados ou sem identidade. A primeira impressão digital vale mais do que 
+            qualquer argumento de venda.
+          </p>
+
+          <p class="reveal reveal-delay-2 text-slate-400 text-lg leading-relaxed mb-10">
+            Nós não "fazemos sites". Nós construímos <strong class="text-white font-500">máquinas de vendas digitais</strong> — 
+            cada pixel pensado para guiar seu visitante até o ponto exato onde ele decide comprar de você.
+          </p>
+
+          <!-- Bullets -->
+          <div class="reveal reveal-delay-3 space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p class="text-slate-300">Design que traduz a identidade da sua marca em autoridade visual</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p class="text-slate-300">Performance otimizada para que o Google te coloque na frente dos concorrentes</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p class="text-slate-300">Estratégia de conversão que transforma visitantes em oportunidades reais de negócio</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual side -->
+        <div class="geo-visual reveal reveal-delay-2 flex items-center justify-center">
+          <div class="relative w-[460px] h-[460px] flex items-center justify-center">
+
+            <!-- Outer ring -->
+            <div class="absolute inset-0 rounded-full border border-indigo-500/10 animate-spin" style="animation-duration:30s;"></div>
+            <div class="absolute inset-8 rounded-full border border-violet-500/10 animate-spin" style="animation-duration:20s;animation-direction:reverse;"></div>
+
+            <!-- Orbiting dots -->
+            <div class="absolute top-0 left-1/2 w-3 h-3 rounded-full bg-indigo-400 shadow-lg shadow-indigo-400/60 -translate-x-1/2 -translate-y-1/2" style="animation: orbit 8s linear infinite;"></div>
+            <div class="absolute bottom-8 right-8 w-2 h-2 rounded-full bg-violet-400 shadow-lg shadow-violet-400/60" style="animation: orbit 12s linear infinite reverse;"></div>
+
+            <!-- Glass card center — inalterado -->
+            <div class="glass rounded-3xl p-8 w-64 h-64 flex flex-col items-center justify-center text-center relative z-10 shadow-2xl" style="border:1px solid rgba(99,102,241,0.2)">
+              <!-- Glow inner -->
+              <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/5 to-violet-500/5"></div>
+              <div class="relative z-10">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center mb-5 mx-auto shadow-lg shadow-indigo-500/40">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+                </div>
+                <p class="font-display text-white font-700 text-lg leading-tight">Design que<br/>converte</p>
+                <p class="text-slate-500 text-sm mt-2">Cada pixel tem um propósito.</p>
+              </div>
+            </div>
+
+            <!-- Floating badges — reposicionados para fora do card -->
+            <!-- "100 Score": canto superior direito, afastado do card -->
+            <div class="absolute top-6 right-4 glass rounded-xl px-3 py-2 text-xs text-indigo-300 font-500 flex items-center gap-2 z-20" style="border:1px solid rgba(99,102,241,0.2);animation:float 5s ease-in-out infinite;">
+              <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+              100 Score
+            </div>
+            <!-- "Ultra Rápido": canto inferior esquerdo, afastado do card -->
+            <div class="absolute bottom-6 left-4 glass rounded-xl px-3 py-2 text-xs text-violet-300 font-500 flex items-center gap-2 z-20" style="border:1px solid rgba(139,92,246,0.2);animation:float 7s ease-in-out infinite 1s;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Ultra Rápido
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PROJETOS EM DESTAQUE
+  ════════════════════════════════════════ -->
+  <section id="projetos" class="relative py-16 md:py-24 overflow-hidden">
+
+    <!-- Background -->
+    <div class="orb w-[600px] h-[600px] bg-indigo-600/8 bottom-0 left-[-200px]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
+      <!-- Section header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="reveal section-label mx-auto" style="width:fit-content;">
+          <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></div>
+          Portfólio
+        </div>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl md:text-5xl font-700 text-white leading-tight mb-4">
+          Projetos em Destaque
+        </h2>
+        <p class="reveal reveal-delay-2 text-slate-400 text-lg">
+          Cada projeto é uma solução única. Construída com precisão, entregue com excelência.
+        </p>
+      </div>
+
+      <!-- Project grid — 2x2 simétrico -->
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- Card 1 — Barbearia Braguista -->
+        <div class="project-card reveal" id="card1">
+          <div class="card-shine" id="shine1"></div>
+          <!-- Image placeholder 16:9 — troque src= pela imagem real quando tiver o print -->
+          <div class="project-img-bg" style="background: linear-gradient(135deg, #0c0a0f 0%, #1c1008 50%, #0c0a0f 100%);">
+            <img
+              src="assets/braguista.png"
+              alt="Preview — Barbearia Braguista"
+              class="absolute inset-0 w-full h-full object-cover"
+              style="opacity:0;transition:opacity 0.4s"
+              onerror="this.style.opacity='0'"
+              onload="this.style.opacity='1'"
+            />
+            <div class="flex flex-col items-center justify-center gap-4 p-6 text-center relative z-10">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 flex items-center justify-center shadow-lg shadow-amber-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+              </div>
+              <div>
+                <p class="text-white font-display font-700 text-xl">Barbearia Braguista</p>
+                <p class="text-amber-400/80 text-sm mt-1">Presença digital premium</p>
+              </div>
+            </div>
+            <div class="absolute inset-0 opacity-10" style="background-image:linear-gradient(rgba(245,158,11,0.4) 1px, transparent 1px),linear-gradient(90deg,rgba(245,158,11,0.4) 1px,transparent 1px);background-size:40px 40px;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display font-700 text-white text-xl mb-2">Barbearia Braguista</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5">Presença digital premium desenvolvida para uma barbearia de alto padrão.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="tag">UI/UX</span>
+              <span class="tag">Alta Performance</span>
+              <span class="tag">Landing Page</span>
+            </div>
+            <a href="https://barbearia-braguista.web.app" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm py-2.5 px-5 w-full justify-center">
+              Visitar Projeto
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2 — Olimpo Barbershop -->
+        <div class="project-card reveal reveal-delay-1" id="card2">
+          <div class="card-shine" id="shine2"></div>
+          <div class="project-img-bg" style="background: linear-gradient(135deg, #0a0c0f 0%, #08152b 50%, #0a0c0f 100%);">
+            <img
+              src="assets/olimpo.png"
+              alt="Preview — Olimpo Barbershop"
+              class="absolute inset-0 w-full h-full object-cover"
+              style="opacity:0;transition:opacity 0.4s"
+              onerror="this.style.opacity='0'"
+              onload="this.style.opacity='1'"
+            />
+            <div class="flex flex-col items-center justify-center gap-4 p-6 text-center relative z-10">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center shadow-lg shadow-sky-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="m4 20 2-8 6 4 6-4 2 8"/><path d="M12 4v4"/><path d="M4 8l2.5 3.5"/><path d="M20 8l-2.5 3.5"/></svg>
+              </div>
+              <div>
+                <p class="text-white font-display font-700 text-xl">Olimpo Barbershop</p>
+                <p class="text-sky-400/80 text-sm mt-1">Experiência web imersiva</p>
+              </div>
+            </div>
+            <div class="absolute inset-0 opacity-10" style="background-image:linear-gradient(rgba(14,165,233,0.4) 1px, transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.4) 1px,transparent 1px);background-size:40px 40px;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display font-700 text-white text-xl mb-2">Olimpo Barbershop</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5">Experiência web moderna e imersiva para o nicho de barbearia clássica.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="tag">Design Responsivo</span>
+              <span class="tag">Conversão</span>
+              <span class="tag">Identidade Visual</span>
+            </div>
+            <a href="https://olimpo-barbershop.web.app/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm py-2.5 px-5 w-full justify-center">
+              Visitar Projeto
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3 — Emily Poli -->
+        <div class="project-card reveal reveal-delay-2" id="card3">
+          <div class="card-shine" id="shine3"></div>
+          <div class="project-img-bg" style="background: linear-gradient(135deg, #0f0a0c 0%, #250d1a 50%, #0f0a0c 100%);">
+            <img
+              src="assets/emily.png"
+              alt="Preview — Emily Poli"
+              class="absolute inset-0 w-full h-full object-cover"
+              style="opacity:0;transition:opacity 0.4s"
+              onerror="this.style.opacity='0'"
+              onload="this.style.opacity='1'"
+            />
+            <div class="flex flex-col items-center justify-center gap-4 p-6 text-center relative z-10">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-700 flex items-center justify-center shadow-lg shadow-rose-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <p class="text-white font-display font-700 text-xl">Emily Poli</p>
+                <p class="text-rose-400/80 text-sm mt-1">Portfólio profissional</p>
+              </div>
+            </div>
+            <div class="absolute inset-0 opacity-10" style="background-image:linear-gradient(rgba(244,63,94,0.4) 1px, transparent 1px),linear-gradient(90deg,rgba(244,63,94,0.4) 1px,transparent 1px);background-size:40px 40px;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display font-700 text-white text-xl mb-2">Emily Poli — Portfólio Profissional</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5">Site focado em autoridade e personal branding para serviços profissionais.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="tag">Personal Branding</span>
+              <span class="tag">Minimalismo</span>
+              <span class="tag">SEO</span>
+            </div>
+            <a href="https://emilypoli.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm py-2.5 px-5 w-full justify-center">
+              Visitar Projeto
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 4 — Rosana Massagem -->
+        <div class="project-card reveal reveal-delay-3" id="card4">
+          <div class="card-shine" id="shine4"></div>
+          <div class="project-img-bg" style="background: linear-gradient(135deg, #0a0f0b 0%, #0b2016 50%, #0a0f0b 100%);">
+            <img
+              src="assets/rosana.png"
+              alt="Preview — Rosana Massagem & Bem-estar"
+              class="absolute inset-0 w-full h-full object-cover"
+              style="opacity:0;transition:opacity 0.4s"
+              onerror="this.style.opacity='0'"
+              onload="this.style.opacity='1'"
+            />
+            <div class="flex flex-col items-center justify-center gap-4 p-6 text-center relative z-10">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div>
+                <p class="text-white font-display font-700 text-xl">Rosana Massagem</p>
+                <p class="text-emerald-400/80 text-sm mt-1">Saúde & Bem-estar</p>
+              </div>
+            </div>
+            <div class="absolute inset-0 opacity-10" style="background-image:linear-gradient(rgba(16,185,129,0.4) 1px, transparent 1px),linear-gradient(90deg,rgba(16,185,129,0.4) 1px,transparent 1px);background-size:40px 40px;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display font-700 text-white text-xl mb-2">Rosana Massagem & Bem-estar</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5">Landing page focada em estética, saúde e agendamento de serviços de massoterapia.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="tag">Saúde & Estética</span>
+              <span class="tag">UX</span>
+              <span class="tag">Captação de Clientes</span>
+            </div>
+            <a href="https://rosana-massagem.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm py-2.5 px-5 w-full justify-center">
+              Visitar Projeto
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA link -->
+      <div class="reveal mt-12 text-center">
+        <p class="text-slate-500 text-sm">Quer ver seu projeto aqui? 
+          <a href="https://wa.me/5517981110842?text=Olá!%20Gostaria%20de%20elevar%20minha%20presença%20digital%20e%20fazer%20um%20orçamento" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 font-500 underline underline-offset-4 transition-colors">Vamos conversar →</a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       DIFERENCIAIS TÉCNICOS
+  ════════════════════════════════════════ -->
+  <section id="diferenciais" class="relative py-16 md:py-24 overflow-hidden">
+
+    <!-- Background -->
+    <div class="orb w-[500px] h-[500px] bg-violet-600/8 top-[-100px] right-[-100px]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
+      <!-- Section header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="reveal section-label mx-auto" style="width:fit-content;">
+          <div class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></div>
+          Por que a WL Design?
+        </div>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl md:text-5xl font-700 text-white leading-tight mb-4">
+          Os 4 pilares da nossa entrega
+        </h2>
+        <p class="reveal reveal-delay-2 text-slate-400 text-lg">
+          Cada projeto que entregamos é construído sobre uma base técnica sólida e uma visão estratégica clara.
+        </p>
+      </div>
+
+      <!-- Features grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Feature 1: Speed -->
+        <div class="feature-card reveal">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">Velocidade Extrema</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Sites com 95+ no Google PageSpeed. Tempo de carregamento abaixo de 2s. Performance que retém visitantes e melhora ranqueamento.</p>
+          <div class="stat-bar mt-5"></div>
+        </div>
+
+        <!-- Feature 2: Responsive -->
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">100% Responsivo</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Layout pixel-perfeito em qualquer tela. Do ultrawide ao iPhone. Sua presença digital impecável em todos os dispositivos.</p>
+          <div class="stat-bar mt-5" style="background:linear-gradient(90deg,#8B5CF6,#A78BFA);"></div>
+        </div>
+
+        <!-- Feature 3: SEO -->
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">SEO Avançado</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Arquitetura técnica que o Google ama. Sitemap, Schema markup, Core Web Vitals e estratégia de palavras-chave integrados desde o código.</p>
+          <div class="stat-bar mt-5" style="background:linear-gradient(90deg,#6366F1,#6366F1);"></div>
+        </div>
+
+        <!-- Feature 4: UX -->
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">UI/UX Estratégica</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Design criado para converter. Hierarquia visual, CTAs estratégicos e fluxo de navegação pensado para o comportamento do seu cliente ideal.</p>
+          <div class="stat-bar mt-5" style="background:linear-gradient(90deg,#A78BFA,#8B5CF6);"></div>
+        </div>
+
+      </div>
+
+      <!-- Process steps -->
+      <div class="mt-20 glass rounded-3xl p-8 md:p-12 reveal" style="border:1px solid rgba(99,102,241,0.12);">
+        <div class="text-center mb-10">
+          <h3 class="font-display text-white font-700 text-2xl md:text-3xl">Como funciona o processo?</h3>
+          <p class="text-slate-400 mt-2">Do briefing à entrega, em 4 etapas claras.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="flex flex-col gap-3">
+            <span class="font-display text-5xl font-800 text-indigo-500/30">01</span>
+            <h4 class="font-display text-white font-600 text-lg">Descoberta</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">Entendemos seu negócio, público-alvo e objetivos em profundidade.</p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <span class="font-display text-5xl font-800 text-indigo-500/30">02</span>
+            <h4 class="font-display text-white font-600 text-lg">Estratégia</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">Criamos um plano de design e conteúdo focado nos seus resultados.</p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <span class="font-display text-5xl font-800 text-indigo-500/30">03</span>
+            <h4 class="font-display text-white font-600 text-lg">Construção</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">Desenvolvemos com precisão técnica, revisando cada detalhe com você.</p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <span class="font-display text-5xl font-800 text-indigo-500/30">04</span>
+            <h4 class="font-display text-white font-600 text-lg">Lançamento</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">Entregamos, publicamos e te damos suporte total no pós-lançamento.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       TESTIMONIALS (Social Proof)
+  ════════════════════════════════════════ -->
+  <section class="relative py-12 md:py-20 overflow-hidden">
+    <div class="orb w-[400px] h-[400px] bg-indigo-600/6 bottom-0 right-0"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="reveal section-label mx-auto" style="width:fit-content;">
+          <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></div>
+          Depoimentos
+        </div>
+        <h2 class="reveal reveal-delay-1 font-display text-3xl md:text-4xl font-700 text-white">O que nossos clientes dizem</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+
+        <!-- Testimonial 1 -->
+        <div class="glass rounded-2xl p-7 reveal" style="border:1px solid rgba(255,255,255,0.06);">
+          <div class="flex mb-4 gap-0.5">
+            <span class="text-yellow-400 text-sm">★★★★★</span>
+          </div>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">"Depois do novo site, nossas consultas mensais aumentaram 180%. O design é exatamente o que precisávamos para transmitir a seriedade da nossa empresa."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-700 text-sm">RM</div>
+            <div>
+              <p class="text-white font-500 text-sm">Ricardo Mendes</p>
+              <p class="text-slate-500 text-xs">CEO, Apex Consulting</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="glass rounded-2xl p-7 reveal reveal-delay-1" style="border:1px solid rgba(255,255,255,0.06);">
+          <div class="flex mb-4 gap-0.5">
+            <span class="text-yellow-400 text-sm">★★★★★</span>
+          </div>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">"Profissionalismo impecável do início ao fim. O prazo foi respeitado, a comunicação foi clara e o resultado final superou tudo que esperávamos."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center text-white font-700 text-sm">JS</div>
+            <div>
+              <p class="text-white font-500 text-sm">Juliana Santos</p>
+              <p class="text-slate-500 text-xs">Fundadora, Lumina Store</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="glass rounded-2xl p-7 reveal reveal-delay-2" style="border:1px solid rgba(255,255,255,0.06);">
+          <div class="flex mb-4 gap-0.5">
+            <span class="text-yellow-400 text-sm">★★★★★</span>
+          </div>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">"Nossa taxa de conversão no site triplicou em 60 dias. O investimento se pagou completamente no primeiro mês. Trabalho excepcional."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-700 text-sm">PA</div>
+            <div>
+              <p class="text-white font-500 text-sm">Paulo Almeida</p>
+              <p class="text-slate-500 text-xs">Diretor, UrbanNest Imóveis</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FORMAÇÃO & ESPECIALIZAÇÕES
+  ════════════════════════════════════════ -->
+  <section id="formacao" class="relative py-16 md:py-24 overflow-hidden">
+    <!-- Background orb -->
+    <div class="orb w-[500px] h-[500px] bg-indigo-600/6 bottom-[-100px] right-[-200px]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="mb-16">
+        <div class="reveal section-label mb-6">
+          <div class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></div>
+          Formação & Especializações
+        </div>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl md:text-5xl lg:text-6xl font-700 text-white leading-tight">
+          Tecnologia é a ferramenta.<br />
+          <span class="shimmer-text">Negócio é o objetivo.</span>
+        </h2>
+      </div>
+
+      <!-- Expertise Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1: ADMINISTRAÇÃO -->
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div class="mb-3">
+             <span class="text-xs font-700 tracking-wider text-indigo-400 uppercase">Administração</span>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">Conhecimentos em Administração</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Gestão, estratégia, processos e visão de negócio.</p>
+          <div class="stat-bar mt-5"></div>
+        </div>
+
+        <!-- Card 2: VENDAS & NEGOCIAÇÃO -->
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="icon-wrap">
+             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="mb-3">
+             <span class="text-xs font-700 tracking-wider text-violet-400 uppercase">Vendas & Negociação</span>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">Formação em Vendas</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Vendas, negociação, atendimento e estratégias comerciais.</p>
+          <div class="stat-bar mt-5" style="background: linear-gradient(90deg, #8B5CF6, #D946EF);"></div>
+        </div>
+
+        <!-- Card 3: INTELIGÊNCIA ARTIFICIAL -->
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="icon-wrap">
+             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3l1.9 5.8 1.9-5.8a2 2 0 0 1 1.3-1.3l5.8-1.9-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M20.5 8 21 6.5 22.5 6 21 5.5 20.5 4 20 5.5 18.5 6 20 6.5Z"/></svg>
+          </div>
+          <div class="mb-3">
+             <span class="text-xs font-700 tracking-wider text-emerald-400 uppercase">Inteligência Artificial</span>
+          </div>
+          <h3 class="font-display text-white font-700 text-xl mb-3">Cursos em Inteligência Artificial</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">IA aplicada à produtividade, criação, automação e soluções digitais.</p>
+          <div class="stat-bar mt-5" style="background: linear-gradient(90deg, #34D399, #10B981);"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER / CTA FINAL
+  ════════════════════════════════════════ -->
+  <footer id="contato" class="relative overflow-hidden">
+
+    <!-- CTA Section -->
+    <div class="relative py-16 md:py-24">
+      <div class="orb w-[700px] h-[700px] bg-indigo-600/12 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+
+      <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <div class="reveal section-label mx-auto mb-8" style="width:fit-content;">
+          <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></div>
+          Próximo Passo
+        </div>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl md:text-6xl lg:text-7xl font-800 text-white leading-tight mb-6">
+          Pronto para dominar<br/>
+          <span class="shimmer-text">seu mercado?</span>
+        </h2>
+        <p class="reveal reveal-delay-2 text-slate-400 text-xl leading-relaxed mb-12 max-w-2xl mx-auto">
+          Vamos conversar sobre o seu projeto. Sem compromisso, sem enrolação — apenas uma conversa honesta sobre o que podemos construir juntos.
+        </p>
+        <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="https://wa.me/5517981110842?text=Olá!%20Gostaria%20de%20elevar%20minha%20presença%20digital%20e%20fazer%20um%20orçamento"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary text-base py-4 px-10 justify-center"
+          >
+            <span>Solicitar Orçamento Gratuito</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </a>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="reveal reveal-delay-4 flex flex-wrap justify-center gap-8 mt-16 pt-12 border-t border-white/5">
+          <div class="flex items-center gap-2 text-slate-500 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Resposta em até 2 horas
+          </div>
+          <div class="flex items-center gap-2 text-slate-500 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Orçamento sem compromisso
+          </div>
+          <div class="flex items-center gap-2 text-slate-500 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Garantia de satisfação
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer bottom bar -->
+    <div class="border-t border-white/5 py-8">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <span class="text-white font-bold text-xs">WL</span>
+          </div>
+          <span class="font-display text-white font-600">WL Design<span class="text-indigo-400">.</span></span>
+        </div>
+        <p class="text-slate-600 text-sm text-center">
+          © <span id="current-year"></span> WL Design. Todos os direitos reservados.
+        </p>
+        <div class="flex items-center gap-5">
+          <a href="https://wa.me/5517981110842" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-white transition-colors text-sm">WhatsApp</a>
+          <a href="mailto:contato@wldesign.com.br" class="text-slate-500 hover:text-white transition-colors text-sm">E-mail</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       FLOATING WHATSAPP BUTTON
+  ════════════════════════════════════════ -->
+  <a
+    href="https://wa.me/5517981110842?text=Olá!%20Gostaria%20de%20elevar%20minha%20presença%20digital%20e%20fazer%20um%20orçamento"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-float"
+    aria-label="Fale pelo WhatsApp"
+  >
+    <div class="tooltip">Fale pelo WhatsApp 💬</div>
+    <!-- WhatsApp SVG icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    // ── Year ──
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // ── Nav scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('nav-blur');
+      } else {
+        navbar.classList.remove('nav-blur');
+      }
+    }, { passive: true });
+
+    // ── Mobile menu ──
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+    });
+
+    // Close mobile menu on nav click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // ── Scroll Reveal ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px',
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Counter Animation ──
+    function animateCounter(el, target, duration = 1800) {
+      let startTime = null;
+      const startVal = 0;
+
+      function update(currentTime) {
+        if (!startTime) startTime = currentTime;
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(startVal + (target - startVal) * eased);
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.dataset.target);
+          animateCounter(entry.target, target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // ── Card shine effect (mousemove) ──
+    function setupCardShine(cardId, shineId) {
+      const card = document.getElementById(cardId);
+      const shine = document.getElementById(shineId);
+      if (!card || !shine) return;
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        shine.style.setProperty('--mouse-x', x + '%');
+        shine.style.setProperty('--mouse-y', y + '%');
+      });
+    }
+    setupCardShine('card1', 'shine1');
+    setupCardShine('card2', 'shine2');
+    setupCardShine('card3', 'shine3');
+    setupCardShine('card4', 'shine4');
+
+    // ── Smooth scroll for anchor links ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ── Orbit animation for floating dots ──
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes orbit {
+        0%   { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // ── Apply orbit to orbiting dots ──
+    document.querySelectorAll('[style*="orbit"]').forEach(el => {
+      el.style.position = 'absolute';
+      el.style.top = '50%';
+      el.style.left = '50%';
+      el.style.marginTop = '-6px';
+      el.style.marginLeft = '-6px';
+    });
+
+    // ── Parallax hero orbs ──
+    const orbs = document.querySelectorAll('#hero .orb');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      orbs.forEach((orb, i) => {
+        const speed = (i + 1) * 0.08;
+        orb.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    }, { passive: true });
+
+    // ── Subtle cursor glow (desktop only) ──
+    if (window.matchMedia('(hover: hover)').matches) {
+      const cursor = document.createElement('div');
+      cursor.style.cssText = `
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 1;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.3s ease;
+      `;
+      document.body.appendChild(cursor);
+
+      let mouseX = 0, mouseY = 0;
+      let curX = 0, curY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }, { passive: true });
+
+      function animateCursor() {
+        curX += (mouseX - curX) * 0.08;
+        curY += (mouseY - curY) * 0.08;
+        cursor.style.left = curX + 'px';
+        cursor.style.top = curY + 'px';
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+    }
+
+    // ── Feature card tilt effect ──
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `translateY(-4px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  </script>
+
+</body>
+</html>
